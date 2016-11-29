@@ -157,7 +157,7 @@ def load_jupyter_server_extension(nbapp):
     webapp.add_handlers(".*$",
         [(ujoin(base_url, h[0]),) + h[1:] for h in default_handlers])
     labextension_handler = (
-        r"%s/(.*)" % EXTENSION_PREFIX, FileFindHandler, {
+        r"%s/(.*)" % ujoin(base_url, EXTENSION_PREFIX), FileFindHandler, {
             'path': jupyter_path('labextensions'),
             'no_cache_paths': ['/'],  # don't cache anything in labbextensions
         }
