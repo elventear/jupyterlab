@@ -70,11 +70,11 @@ class LabHandler(IPythonHandler):
         labextensions = self.application.labextensions
         data = get_labextension_manifest_data_by_folder(BUILT_FILES)
         if 'main' not in data or 'extensions' not in data:
-            msg = ('JupyterLab build artifacts not detected, please see ' + 
+            msg = ('JupyterLab build artifacts not detected, please see ' +
                    'CONTRIBUTING.md for build instructions.')
             self.log.error(msg)
-            self.write(self.render_template('error.html', 
-                       status_code=500, 
+            self.write(self.render_template('error.html',
+                       status_code=500,
                        status_message='JupyterLab Error',
                        page_title='JupyterLab Error',
                        message=msg))
@@ -101,12 +101,12 @@ class LabHandler(IPythonHandler):
                 if value.get('entry', None):
                     entries.append(value['entry'])
                     bundles.append('%s/%s/%s' % (
-                        EXTENSION_PREFIX, name, value['files'][0]
+                        ujoin(self.base_url, EXTENSION_PREFIX), name, value['files'][0]
                     ))
                 for fname in value['files']:
                     if os.path.splitext(fname)[1] == '.css':
                         css_files.append('%s/%s/%s' % (
-                            EXTENSION_PREFIX, name, fname
+                            ujoin(self.base_url, EXTENSION_PREFIX), name, fname
                         ))
 
         self.write(self.render_template('lab.html',
